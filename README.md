@@ -1,5 +1,7 @@
 # cinister
 
+Cinister is a phpMyAdmin Scanner.
+
 Start by installing Java:
 
 Debian - `apt-get install default-jre`
