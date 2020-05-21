@@ -47,6 +47,12 @@ public class Scanner implements Runnable{
                         }
                     }
                 }
+
+            }catch (Exception e){
+
+            }
+            try{
+                Thread.sleep(100);
             }catch (Exception e){
 
             }
