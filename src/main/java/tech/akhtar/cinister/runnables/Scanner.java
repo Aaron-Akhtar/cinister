@@ -2,9 +2,7 @@ package tech.akhtar.cinister.runnables;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -12,16 +10,20 @@ import static tech.akhtar.cinister.Cinister.*;
 public class Scanner implements Runnable{
     private static List<String> tried = new ArrayList<>();
 
-    private static URL genUrl() throws MalformedURLException {
+    private static String genUrl() throws MalformedURLException {
         Random random = new Random();
-        return new URL("http://" + random.nextInt(255) + "." + random.nextInt(255) + "."  + random.nextInt(255) + "." + random.nextInt(255) + "/phpmyadmin");
+        return "http://" + random.nextInt(255) + "." + random.nextInt(255) + "."  + random.nextInt(255) + "." + random.nextInt(255) + "/phpmyadmin";
     }
 
     @Override
     public void run() {
         while(true){
             try{
-                URL url = genUrl();
+                String r = genUrl();
+                try(Socket socket = new Socket()){
+                    socket.connect(new InetSocketAddress(r, 80), CONNECT_TIMEOUT);
+                }
+                URL url = new URL(r);
                 if (tried.contains(url.getHost())) continue;
                 tried.add(url.getHost());
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
